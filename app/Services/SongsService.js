@@ -2,10 +2,8 @@ import Song from "../Models/Song.js";
 import store from "../store.js";
 
 // @ts-ignore
-let _sandBox = axios.create({
-  //TODO Change YOURNAME to your actual name
-  baseURL: "//bcw-sandbox.herokuapp.com/api/YOURNAME/songs"
-});
+//TODO Change YOURNAME to your actual name
+let _sandBoxUrl = "//bcw-sandbox.herokuapp.com/api/YOURNAME/songs";
 
 class SongsService {
   constructor() {
@@ -17,33 +15,21 @@ class SongsService {
    * Takes in a search query and retrieves the results that will be put in the store
    * @param {string} query
    */
-  getMusicByQuery(query) {
-    //NOTE You will not need to change this method
-    let url = "https://itunes.apple.com/search?callback=?&term=" + query;
-    // @ts-ignore
-    $.getJSON(url)
-      .then(res => {
-        let results = res.results.map(rawData => new Song(rawData));
-        store.commit("songs", results);
-      })
-      .catch(err => {
-        throw new Error(err);
-      });
+  async getMusicByQuery(query) {
+    // NOTE You will not need to change this method
+    let url = "https://itunes.apple.com/search?&term=" + query;
+    let response = await fetch(url);
+    let data = await response.json();
+    console.log("THE SONG DATA", data.results);
   }
 
   /**
    * Retrieves the saved list of songs from the sandbox
    */
-  getMySongs() {
-    _sandBox
-      .get()
-      .then(res => {
-        //TODO What are you going to do with this result
-        let results = res.results.map(rawData => new Song(rawData));
-      })
-      .catch(error => {
-        throw new Error(error);
-      });
+  async getMySongs() {
+    let response = await fetch(_sandBoxUrl);
+    let data = await response.json();
+    console.log("MY SONGS", data.data);
   }
 
   /**

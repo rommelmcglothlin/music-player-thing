@@ -16,7 +16,7 @@ Secondly you will be tasked with allowing users to save their favorite songs to 
 
 The first thing to focus on will be adding the correct information to the screen. You will be doing this through a `drawResults` function that will need to be setup in `SongsController.js`
 
-> Your `drawResults` function will need to be registerd as a subscriber to the `songs` field in the store
+> Your `drawResults` function will need to await the search before it can be called
 
 > The `songs` is an `array` of `Song` class objects where you will find an example of in the models folder
 

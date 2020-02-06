@@ -10,15 +10,16 @@ function _drawPlaylist() {}
 //Public
 export default class SongsController {
   constructor() {
-    //TODO Don't forget to register your subscribers
+    // TODO load your playlist
   }
 
   /**Takes in the form submission event and sends the query to the service */
-  search(e) {
+  async search(e) {
     //NOTE You dont need to change this method
     e.preventDefault();
     try {
-      SongService.getMusicByQuery(e.target.query.value);
+      await SongService.getMusicByQuery(e.target.query.value);
+      _drawResults();
     } catch (error) {
       console.error(error);
     }
@@ -28,11 +29,11 @@ export default class SongsController {
    * Takes in a song id and sends it to the service in order to add it to the users playlist
    * @param {string} id
    */
-  addSong(id) {}
+  async addSong(id) {}
 
   /**
    * Takes in a song id to be removed from the users playlist and sends it to the server
    * @param {string} id
    */
-  removeSong(id) {}
+  async removeSong(id) {}
 }
