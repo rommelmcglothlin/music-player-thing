@@ -5,9 +5,13 @@ class Store {
    * Provides access to application state data
    */
   state = {
-    songs: []
+    /**@type {Song[]} */
+    songs: [],
+    /**@type {Song[]} */
+    myPlaylist: [],
+    nowPlaying: new Song()
   };
 }
 
-const store = new Store();
-export default store;
+const STORE = new Store();
+export default STORE;

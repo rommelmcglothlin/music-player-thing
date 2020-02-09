@@ -1,9 +1,9 @@
 import Song from "../Models/Song.js";
-import store from "../store.js";
+import STORE from "../store.js";
 
 // @ts-ignore
 //TODO Change YOURNAME to your actual name
-let _sandBoxUrl = "//bcw-sandbox.herokuapp.com/api/YOURNAME/songs";
+let _sandBoxUrl = "//bcw-sandbox.herokuapp.com/api/romrom/songs/";
 
 class SongsService {
   constructor() {
@@ -20,7 +20,12 @@ class SongsService {
     let url = "https://itunes.apple.com/search?&term=" + query;
     let response = await fetch(url);
     let data = await response.json();
-    console.log("THE SONG DATA", data.results);
+    STORE.state.songs = data.results.map(s => new Song(s));
+  }
+
+  async nowPlaying(_id) {
+    let playing = STORE.state.songs.find(s => s._id == _id);
+    STORE.state.nowPlaying = playing;
   }
 
   /**
@@ -29,17 +34,34 @@ class SongsService {
   async getMySongs() {
     let response = await fetch(_sandBoxUrl);
     let data = await response.json();
-    console.log("MY SONGS", data.data);
+    STORE.state.myPlaylist = data.data.map(newSong => new Song(newSong));
   }
 
   /**
    * Takes in a song id and sends it from the search results to the sandbox to be saved.
    * Afterwords it will update the store to reflect saved info
-   * @param {string} id
+   * @param {string} _id
    */
-  addSong(id) {
-    //TODO you only have an id, you will need to find it in the store before you can post it
-    //TODO After posting it what should you do?
+  async addSong(_id) {
+    let nowPlaying = STORE.state.nowPlaying;
+    let found = STORE.state.myPlaylist.find(s => s._id == nowPlaying._id);
+
+    if (found) {
+      throw new Error("This has already been added to your playlist.");
+    }
+
+    let response = await fetch(_sandBoxUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(nowPlaying)
+    });
+
+    let songData = await response.json();
+    let inPlaylist = new Song(songData.data);
+    STORE.state.myPlaylist.push(inPlaylist);
+    STORE.state.nowPlaying = inPlaylist;
   }
 
   /**
@@ -47,8 +69,15 @@ class SongsService {
    * Afterwords it will update the store to reflect saved info
    * @param {string} id
    */
-  removeSong(id) {
-    //TODO Send the id to be deleted from the server then update the store
+  async removeSong(id) {
+    await fetch(_sandBoxUrl + id, {
+      method: "DELETE"
+    });
+    let i = STORE.state.myPlaylist.findIndex(s => s._id == id);
+    if (i != 1) {
+      STORE.state.myPlaylist.splice(i, 1);
+    }
+    STORE.state.nowPlaying = new Song();
   }
 }
 

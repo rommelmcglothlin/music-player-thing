@@ -12,40 +12,67 @@
     <title>Music is Fun</title>
   </head>
 
-  <body class="container-fluid">
-    <header class="row">
-      <div class="col-12 bannerStyle">
-        <p>Music is Fun</p>
-      </div>
-      <div class="offset-8 col-4">
-        <form onsubmit="app.songsController.search(event)">
+  <body class="bg-dark d-flex-column">
+    <header class="container-fluid header_div">
+      <div class="wrapper">
+	      <h1 class="mega montserrat bold">
+		      MUSIC<span class="color-emphasis-1">FINDER.</span>
+		    </h1>
+	    </div>
+
+
+      <div class="row"></div>
+        <form class="form-inline justify-content-center pt-5 pb-5"
+          onsubmit="app.songsController.search(event)"
+        >
           <input
+            class="col-sm-6 form-control col-form-label mb-2"
             type="text"
-            class="form-control"
             name="query"
             placeholder="Search For Music"
           />
-          <button class="btn btn-success mt-1 form-control" type="submit">
-            Search
-          </button>
-        </form>
-      </div>
+          <span class="pl-2">
+            <button class="btn btn-primary mt-1 form-control" type="submit">
+              <i class="fas fa-search"></i>
+            </button>
+            </span>
+          </form>
+        </div>
     </header>
 
     <main class="row">
-      <div class="col-6">
-        <h3 class="text-center">Search Results</h3>
-        <div id="songs" class="col-12 m-0">
-          <!-- template to generate -->
+      <div style="border:no-border;width:300px;height:600px;overflow:scroll" class="col-lg-3 m-auto ">
+         <h3 class="text-center text-light">Search Results</h3>
+         <div class="m-auto d-flex justify-content-center">
+           <div id="songs" class="gallery col-10">
+             <!-- template to generate -->
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="col-6">
-        <h3 class="text-center">Playlist</h3>
-        <div class="col-12 m-0" id="playlist">
+        
+      <div class="col-lg-6">
+        <div class="m-auto" id="preview">
           <!-- template for playlist -->
         </div>
       </div>
+      
+      <div class="col-lg-3">
+        <h3 class="text-center text-light">Playlist</h3>
+        <div class="col-4 m-0" id="playlist">
+          <!-- template for playlist -->
+        </div>
+      </div>
+
     </main>
+
+    <footer class="row text-light align-items-center p-2">
+        <div class="col-6 text-left">
+          <p class="pl-2 pt-2">Boise CodeWorks.</p>
+        </div>
+        <div class="col-6 text-right">
+          <img src="assets/images/cw-logo.png" height="90" alt="">
+        </div>
+    </footer>
 
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"
@@ -57,6 +84,15 @@
       integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
       crossorigin="anonymous"
     ></script>
+    <script
+      src="https://kit.fontawesome.com/9c2d120d7c.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- <script>
+      var el = document.querySelector(".el");
+      var height = el.scrollHeight;
+      el.style.setProperty("--max-height", height + "px");
+    </script> -->
     <script src="app/main.js" type="module"></script>
   </body>
 </html>
