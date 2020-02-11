@@ -60,13 +60,14 @@ export default class Song {
 
   get PlaylistTemplate() {
     return /* html */ `
-        <div class="border p-2 mb-1">
-        <div class="d-flex align-items-center justify-content-between">
+        <div class="border p-2 mb-2">
+        <div class="d-flex text-light align-items-center justify-content-between">
         <div>
-          <img src="${this.albumArt}" height="65">
-          <span class="ml-2">${this.artist}</span>
+          <img src="${this.albumArt}" height="80">
+          <span class="ml-2 color-emphasis-1">${this.artist}</span>
+          <span class="ml-2">${this.title}</span>
         </div>
-        <span class="text-danger" onclick="app.songsController.removeSong('${this._id}')">&times;</span>
+         <button class="btn btn-location btn-danger" onclick="app.songsController.removeSong('${this._id}')"><i class="fas fa-trash-alt"></i></button>
         </div>
       </div>
         `;

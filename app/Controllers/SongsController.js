@@ -22,7 +22,7 @@ function _drawPreview() {
 /**Draws the Users saved songs to the page */
 function _drawPlaylist() {
   let template = "";
-  STORE.state.playlist.forEach(song => {
+  STORE.state.myPlaylist.forEach(song => {
     template += song.PlaylistTemplate;
   });
   document.getElementById("playlist").innerHTML = template;
@@ -63,7 +63,7 @@ export default class SongsController {
   async getMyPlaylist() {
     try {
       await SongService.getMySongs();
-      // _drawPlaylist();
+      _drawPlaylist();
     } catch (error) {
       _drawError(error);
     }

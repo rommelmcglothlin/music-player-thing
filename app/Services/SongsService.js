@@ -7,7 +7,6 @@ let _sandBoxUrl = "//bcw-sandbox.herokuapp.com/api/romrom/songs/";
 
 class SongsService {
   constructor() {
-    // NOTE this will get your songs on page load
     this.getMySongs();
   }
 
@@ -42,6 +41,8 @@ class SongsService {
    * Afterwords it will update the store to reflect saved info
    * @param {string} _id
    */
+  // REVIEW Most likely there is an issue here
+  // FIXME
   async addSong(_id) {
     let nowPlaying = STORE.state.nowPlaying;
     let found = STORE.state.myPlaylist.find(s => s._id == nowPlaying._id);
