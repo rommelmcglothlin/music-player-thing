@@ -11,6 +11,7 @@ export default class Song {
     this.price = data.trackPrice || data.price;
     this.preview = data.previewUrl || data.preview;
     this._id = data.trackId || data._id;
+    this.trackId = data.trackId;
   }
 
   get Template() {
@@ -26,7 +27,7 @@ export default class Song {
   }
 
   get SongPreview() {
-    let button = this._id
+    let button = this.trackId
       ? /* html */ `
       <button class="btn btn-location btn-success" onclick="app.songsController.addSong('${this._id}')"><i class="fas fa-plus-square"></i></button>
       `
@@ -62,7 +63,7 @@ export default class Song {
     return /* html */ `
         <div class="border p-2 mb-2">
         <div class="d-flex text-light align-items-center justify-content-between">
-        <div>
+        <div onclick="app.songsController.getNowPlaying('${this._id}')">
           <img src="${this.albumArt}" height="80">
           <span class="ml-2 color-emphasis-1">${this.artist}</span>
           <span class="ml-2">${this.title}</span>

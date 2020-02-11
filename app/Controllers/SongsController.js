@@ -90,7 +90,6 @@ export default class SongsController {
   async removeSong(id) {
     try {
       await SongService.removeSong(id);
-      _drawPreview();
       _drawPlaylist();
     } catch (error) {
       _drawError(error);

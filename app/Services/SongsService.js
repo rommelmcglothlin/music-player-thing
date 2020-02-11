@@ -24,6 +24,9 @@ class SongsService {
 
   async nowPlaying(_id) {
     let playing = STORE.state.songs.find(s => s._id == _id);
+    if (!playing) {
+      playing = STORE.state.myPlaylist.find(s => s._id == _id);
+    }
     STORE.state.nowPlaying = playing;
   }
 
